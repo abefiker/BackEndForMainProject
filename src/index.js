@@ -48,8 +48,8 @@ app.post("/signup", async (req, res) => {
       const check = await collection.findOne({ email: req.body.email });
       if (check && check.password === req.body.password) {  // Use strict comparison (===)
         res.status(200).render('home', {
-          firstname: check.firstname,
-          lastname: check.lastname
+          naming: check.firstname,
+          lnaming: check.lastname
         });
       } else {
         res.send('Invalid credentials'); // More informative message
