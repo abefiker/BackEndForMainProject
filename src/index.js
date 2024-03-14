@@ -10,6 +10,7 @@ const collection = require("./mongodb")
 const path = require("path");
 const hbs = require("hbs");
 const bodyParser = require("body-parser");
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
