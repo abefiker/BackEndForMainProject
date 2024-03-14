@@ -19,7 +19,9 @@ const LogInSchema = new mongoose.Schema({
     },
     email:{
         type : String,
-        required : true
+        required : true,
+        lowercase : true,
+        unique : true
     },
     password:{
         type:String,
