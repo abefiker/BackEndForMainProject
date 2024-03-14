@@ -11,7 +11,6 @@ router.post("/register", async (req, res, next) => {
         // Check if email and password are provided
         // if (!email || !password) throw createError.BadRequest("Email and password are required.");
         const result = await authSchema.validateAsync(req.body)
-        console.log(result)
 
         // Check if the user already exists
         const doesExist = await collection.findOne({ email: result.email });
