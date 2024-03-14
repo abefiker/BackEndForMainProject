@@ -9,6 +9,14 @@ mongoose.connect("mongodb://127.0.0.1:27017/BackendForMainProject")
 })
 
 const LogInSchema = new mongoose.Schema({
+    firstname :{
+        type:String,
+        required:true
+    },
+    lastname :{
+        type:String,
+        required:true
+    },
     email:{
         type : String,
         required : true

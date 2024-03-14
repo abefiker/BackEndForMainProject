@@ -24,40 +24,42 @@ app.get("/signup", (req, res) => {
 
 app.post("/signup", async (req, res) => {
     const data = {
-        email: req.body.email,
-        password: req.body.password
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: req.body.password
     };
-    const check = await collection.findOne({email:req.body.email})
-    try{
-        if(check.email == req.body.email && check.password == req.body.password){
-            res.send("User details already exists")
-        }
-        else{
-            await collection.insertMany([data]);
-        }
-    }catch{
-        res.send("wrong inputs")
+    const check = await collection.findOne({ email: req.body.email })
+  
+    if (check) {
+      // User already exists
+      return res.status(400).send("User details already exist"); 
     }
-     res.status(201).render('home',{
-        emailing : req.body.email
-     });
-});
-app.post("/login",async (req,res)=>{
-    try{
-        const check = await collection.findOne({email:req.body.email})
-        if(check.password == req.body.password){
-            res.status(200).render('home',{
-                emailing : req.body.email
-            })
-        }else{
-            res.send('wrong password')
-        }
-    }   
-    catch{
-        res.send('wrong detail')
-    } 
-})
-
+  
+    await collection.insertMany([data]);
+    res.status(201).render('home', {
+      naming: req.body.firstname,
+      lnaming : req.body.lastname
+    });
+  });
+  
+  app.post("/login", async (req, res) => {
+    try {
+      const check = await collection.findOne({ email: req.body.email });
+      if (check && check.password === req.body.password) {  // Use strict comparison (===)
+        res.status(200).render('home', {
+          firstname: check.firstname,
+          lastname: check.lastname
+        });
+      } else {
+        res.send('Invalid credentials'); // More informative message
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      res.status(500).send('Internal server error'); // Generic error for client
+    }
+  });
+  
 app.listen(3000, () => {
     console.log("server running at 3000");
 });
