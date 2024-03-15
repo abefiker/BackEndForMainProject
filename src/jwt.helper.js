@@ -38,5 +38,22 @@ module.exports = {
             req.payload = payload
             next()
         })
+    }, signRefreshToken: (userid) => {
+        return new Promise((resolve, reject) => {
+            const payload = {}
+            const secret = process.env.REFRESH_TOKEN_SECRET ||'a36beff049c1795c3fd1fd41e50ee1aca09478db930d99adf05fc370b3207909'
+            const options = {
+                expiresIn: '1y',
+                issuer:'https://oasis-lovat.vercel.app/',
+                audience : userid,
+            }
+            JWT.sign(payload,secret,options,(err,token)=>{
+                if(err){
+                    console.log(err.message)
+                    return reject(createError.InternalServerError())
+                }
+                resolve(token)
+            })
+        })
     }
 }

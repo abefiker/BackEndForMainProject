@@ -3,7 +3,7 @@ const router = express.Router()
 const createError = require('http-errors')
 const { Registercollection,Logincollection}= require('../src/mongodb')
 const {authSchema,authSchemaL} = require("../src/validation.schema")
-const {signAccessToken} = require('../src/jwt.helper')
+const {signAccessToken,signRefreshToken} = require('../src/jwt.helper')
 
 router.post("/register", async (req, res, next) => {
     try {
@@ -21,7 +21,8 @@ router.post("/register", async (req, res, next) => {
         const newUser = new Registercollection(result); 
         const savedUser = await newUser.save();
         const accessToken = await signAccessToken(savedUser.id) 
-        res.status(201).send({accessToken});
+        const refreshToken = await signRefreshToken(savedUser.id)
+        res.status(201).send({accessToken,refreshToken});
     } catch (error) {
         if(error.isJoi === true) 
             return next(createError[422])
@@ -40,7 +41,8 @@ router.post("/login",async (req,res,next)=>{
         // const LoginUser = new Logincollection(result); 
         // const savedUser = await LoginUser.save();
         const accessToken = await signAccessToken(doesExist.id)
-        res.send({accessToken})
+        const refreshToken = await signRefreshToken(doesExist.id)
+        res.send({accessToken,refreshToken})
     } catch (error) {
         if(error.isJoi === true) 
             return next(createError.BadRequest("Invalid email/password"))
