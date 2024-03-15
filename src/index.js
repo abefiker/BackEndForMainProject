@@ -10,6 +10,7 @@ const collection = require("./mongodb")
 const path = require("path");
 const hbs = require("hbs");
 const bodyParser = require("body-parser");
+const {verifyAccessToken} = require('./jwt.helper')
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -24,8 +25,9 @@ app.set('views', templatePath);
 app.use(express.static(publicPath));
 
 
-app.get("/", (req, res) => {
-  res.render('hello from express');
+app.get("/",verifyAccessToken, async(req, res,next) => {
+  console.log(req.headers['authorization'])
+  res.send('hello from express');
 });
 app.use('/auth',AuthRoute)
 

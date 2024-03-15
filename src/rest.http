@@ -1,4 +1,5 @@
-GET http://localhost:3000/
+GET http://localhost:3000 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTA1MDY3NzYsImV4cCI6MTcxMDUxMDM3NiwiYXVkIjoiNjVmM2ZmMDk5NmI4MDY4ZGY2YjM0NzY4IiwiaXNzIjoiaHR0cHM6Ly9vYXNpcy1sb3ZhdC52ZXJjZWwuYXBwLyJ9.64CPOgLzIpdeXpY2r8NFWEuI9IZnHA7DwahI25UW7wA
 
 ###
 GET http://localhost:3000/123_abc

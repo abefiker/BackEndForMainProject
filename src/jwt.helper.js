@@ -20,5 +20,19 @@ module.exports = {
                 resolve(token)
             })
         })
+    },
+
+    verifyAccessToken:(req,res,next)=>{
+        if (!req.headers['authorization']) return next(createError.Unauthorized())
+        const authHeader = req.headers['authorization']
+        const bearerToken = authHeader.split(' ')
+        const token = bearerToken[1]
+        JWT.verify(token ,process.env.ACCESS_TOKEN_SECRET||'575a0febd3393c32bf3e2d33da524285c8bc61a1742e04ec686f5458a1151917',(err,payload)=>{
+            if (err){
+                return next(createError.Unauthorized())
+            }
+            req.payload = payload
+            next()
+        })
     }
 }
