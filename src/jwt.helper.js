@@ -8,7 +8,7 @@ module.exports = {
             }
             const secret = process.env.ACCESS_TOKEN_SECRET ||'575a0febd3393c32bf3e2d33da524285c8bc61a1742e04ec686f5458a1151917'
             const options = {
-                expiresIn: '1h',
+                expiresIn: '15s',
                 issuer:'https://oasis-lovat.vercel.app/',
                 audience : userid,
             }
@@ -29,7 +29,11 @@ module.exports = {
         const token = bearerToken[1]
         JWT.verify(token ,process.env.ACCESS_TOKEN_SECRET||'575a0febd3393c32bf3e2d33da524285c8bc61a1742e04ec686f5458a1151917',(err,payload)=>{
             if (err){
-                return next(createError.Unauthorized())
+                if(err.name === 'JsonWebTokenError'){
+                    return next(createError.Unauthorized())
+                }else{
+                    return next(createError.Unauthorized(err.message))
+                }
             }
             req.payload = payload
             next()

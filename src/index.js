@@ -5,7 +5,7 @@ const app = express();
 app.use(morgan('dev'))
 const createError = require("http-errors")
 require('dotenv').config()
-const collection = require("./mongodb")
+//const collection = require("./mongodb")
 
 const path = require("path");
 const hbs = require("hbs");
