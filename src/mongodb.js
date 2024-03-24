@@ -1,5 +1,6 @@
 
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt")
 mongoose.connect('mongodb://127.0.0.1:27017/', {
     dbName: 'BackendForMainProject'
@@ -23,7 +24,7 @@ process.on('SIGINT', async () => {
     process.exit(0)
 })
 
-const RegisterSchema = new mongoose.Schema({
+const RegisterSchema = new Schema({
     firstname: {
         type: String,
         required: true
@@ -43,7 +44,7 @@ const RegisterSchema = new mongoose.Schema({
         required: true
     }
 });
-const LoginSchema = new mongoose.Schema({
+const LoginSchema = new Schema ({
     email: {
         type: String,
         required: true
@@ -81,11 +82,38 @@ LoginSchema.pre('save', async function (next) {
         next(error)
     }
 })
-
+const NoteSchema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    lastModifiedDate: {
+        type: Date,
+        default: Date.now
+    },
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'Registercollection', // Reference to the user who created the note
+        required: true
+    },
+    media: [{
+        type: String // You can store URLs of images or videos here
+    }]
+})
 
 const Registercollection = new mongoose.model("RegisterCollection", RegisterSchema)
 const Logincollection = new mongoose.model("LoginCollection", LoginSchema)
+const Note = new mongoose.model("Note", NoteSchema)
 module.exports = {
     Registercollection,
-    Logincollection
+    Logincollection,
+    Note
 }

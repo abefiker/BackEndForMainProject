@@ -1,6 +1,5 @@
 GET http://localhost:3000 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTA1MDgzNTAsImV4cCI6MTcxMDUwODM2NSwiYXVkIjoiNjVmM2ZmMDk5NmI4MDY4ZGY2YjM0NzY4IiwiaXNzIjoiaHR0cHM6Ly9vYXNpcy1sb3ZhdC52ZXJjZWwuYXBwLyJ9.L2wj-PmNRAZbBp0DL5BUodbZDVS29ItDc8Fkrkh6DAs
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTA4NDY5NDcsImV4cCI6MTcxMDg0Njk4MiwiYXVkIjoiNjVmM2ZmMDk5NmI4MDY4ZGY2YjM0NzY4IiwiaXNzIjoiaHR0cHM6Ly9vYXNpcy1sb3ZhdC52ZXJjZWwuYXBwLyJ9.5qZvoF2csFCJZrtUvh6uOZNz0lycrxOPT1xxecvchiE
 ###
 GET http://localhost:3000/123_abc
 
@@ -18,14 +17,17 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/auth/login HTTP/1.1
 Content-Type: application/json
-
 {
     "email":"endetnsh@gmail.com",
     "password":"br0yeLule"
 }
 
 ###
-POST http://localhost:3000/auth/refresh-token
+POST http://localhost:3000/auth/refresh-token HTTP/1.1
+Content-Type: application/json
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTA4NDIzODQsImV4cCI6MTc0MjM5OTk4NCwiYXVkIjoiNjVmM2ZmMDk5NmI4MDY4ZGY2YjM0NzY4IiwiaXNzIjoiaHR0cHM6Ly9vYXNpcy1sb3ZhdC52ZXJjZWwuYXBwLyJ9.QQpnopXUWyAf1vEWoBwsxH5YrLYjcafl6OEqMJRFc0c"
 
+}
 ###
 DELETE  http://localhost:3000/auth/logout
